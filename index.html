@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="English">
+<title>English Notes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{--bg:#f6f4ef;--card:#fffdf8;--ink:#23211d;--mute:#6f6a60;--line:#e4dfd3;--acc:#2f6b5e;--accbg:#dcebe6;--warn:#b4572f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171815;--card:#201f1c;--ink:#ece8de;--mute:#9b968a;--line:#34322c;--acc:#7cc4b0;--accbg:#27403a;--warn:#e69a72}}
+:root[data-theme="dark"]{--bg:#171815;--card:#201f1c;--ink:#ece8de;--mute:#9b968a;--line:#34322c;--acc:#7cc4b0;--accbg:#27403a;--warn:#e69a72}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:17px/1.6 Nunito,-apple-system,"SF Pro Text",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:720px;margin:0 auto;padding:16px 16px 96px}
+h1{font:700 28px/1.2 Lora,Lora,Georgia,serif;margin:8px 0 4px}
+h2{font:700 22px/1.25 Lora,Georgia,serif;margin:6px 0 12px}
+h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:24px 0 8px}
+.sub{color:var(--mute);margin:0 0 16px;font-size:15px}
+.bar{display:flex;gap:8px;margin:12px 0}
+input[type=search],textarea{width:100%;font:inherit;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink)}
+textarea{min-height:180px;font:14px/1.4 ui-monospace,Menlo,monospace}
+.prog{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin:6px 0 16px}.prog i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;min-height:64px;padding:12px 14px;margin:0 0 10px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:inherit;font:inherit;cursor:pointer}
+.item:active{transform:scale(.99)}
+.item b{display:block;font-weight:600}.item small{color:var(--mute);font-size:13px}
+.dot{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;color:transparent}
+.dot.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tag{margin-left:auto;font-size:12px;padding:3px 9px;border-radius:99px;background:var(--accbg);color:var(--acc);white-space:nowrap}
+.btn{min-height:48px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 16px inherit;cursor:pointer}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.btn.wide{width:100%;margin-top:10px}
+.blk{margin:0 0 14px}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--mute);background:var(--accbg);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.ex{background:var(--card);border-left:4px solid var(--acc);border-radius:10px;padding:10px 14px;margin:8px 0}
+.ex em{display:block;color:var(--mute);font-style:normal;font-size:15px}
+.note{background:var(--accbg);border-radius:12px;padding:12px 14px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line)}
+nav button{flex:1;max-width:200px;min-height:48px;border:0;border-radius:12px;background:none;color:var(--mute);font:600 14px inherit;cursor:pointer}
+nav button.on{background:var(--accbg);color:var(--acc)}
+.back{background:none;border:0;color:var(--acc);font:600 16px inherit;padding:10px 0;cursor:pointer;min-height:44px}
+pre{white-space:pre-wrap;font:13px/1.4 ui-monospace,Menlo,monospace;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.msg{margin-top:10px;font-size:15px}.ok{color:var(--acc)}.err{color:var(--warn)}
+
+:root{--k1:#2f7d5b;--k2:#2f6aa8;--k3:#a8701a;--k4:#7a4fa3;--b1:#e3f1ea;--b2:#e1ebf7;--b3:#f7ecd5;--b4:#ece4f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--k1:#7cc4a0;--k2:#8db8ea;--k3:#e6b866;--k4:#c2a0e6;--b1:#23352d;--b2:#232f40;--b3:#3b3322;--b4:#342b42}}
+:root[data-theme="dark"]{--k1:#7cc4a0;--k2:#8db8ea;--k3:#e6b866;--k4:#c2a0e6;--b1:#23352d;--b2:#232f40;--b3:#3b3322;--b4:#342b42}
+button,input,textarea{font-family:inherit}
+table{font-size:15px;line-height:1.45}
+th{padding:11px 12px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);border-bottom:2px solid var(--acc)}
+td{padding:12px}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--accbg) 40%,transparent)}
+td:first-child{font-weight:700}
+.sec{font:700 21px Lora,Georgia,serif;margin:32px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--acc)}
+.tg{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.tg table{min-width:760px;table-layout:fixed}
+.tg th,.tg td{border-bottom:1px solid var(--line);vertical-align:top;white-space:normal}
+.tg th{text-transform:none;letter-spacing:0;font-size:15px;font-weight:800;padding:12px 10px}
+.tg th small{display:block;font-weight:600;font-size:12px;opacity:.85}
+.tg th:first-child,.tg td:first-child{position:sticky;left:0;z-index:1;width:78px;background:var(--card);color:var(--ink);border-bottom:1px solid var(--line)}
+.tg td{padding:14px 10px;background:none !important}
+.tg .f{display:block;font-weight:800;font-size:16px;line-height:1.3;margin-bottom:6px}
+.tg .e{display:block;font-size:13px;color:var(--mute);line-height:1.4}
+.tg th.c1{background:var(--b1);color:var(--k1);border-bottom:3px solid var(--k1)}.tg td.c1 .f{color:var(--k1)}
+.tg th.c2{background:var(--b2);color:var(--k2);border-bottom:3px solid var(--k2)}.tg td.c2 .f{color:var(--k2)}
+.tg th.c3{background:var(--b3);color:var(--k3);border-bottom:3px solid var(--k3)}.tg td.c3 .f{color:var(--k3)}
+.tg th.c4{background:var(--b4);color:var(--k4);border-bottom:3px solid var(--k4)}.tg td.c4 .f{color:var(--k4)}
+.tg tr:last-child td{border-bottom:0}
+.cd{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 10px}
+.cd .n{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font:800 22px Lora,serif}
+.cd .f{font-weight:800;font-size:16px;line-height:1.35}.cd .w{color:var(--mute);font-size:14px;margin-top:2px}.cd .e{margin-top:8px;font-size:15px}
+.n.c1{background:var(--b1);color:var(--k1)}.n.c2{background:var(--b2);color:var(--k2)}.n.c3{background:var(--b3);color:var(--k3)}.n.c4{background:var(--b4);color:var(--k4)}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav><button data-v="home">Темы</button><button data-v="import">Импорт</button><button data-v="theme">Тема ◐</button></nav>
+<script>
+var BASE=[
+{id:"present-simple-3rd",title:"Present Simple: 3-е лицо",tag:"Grammar",desc:"Окончания -s / -es",blocks:[
+{t:"table",head:["Правило","Пример"],rows:[["Глагол на согласную → +s","work – works, help – helps, want – wants"],["Немая E → +s","like – likes, live – lives, move – moves"],["Гласная + Y → +s","play – plays, stay – stays, say – says"],["Согласная + Y → Y меняется на I, +es","study – studies, copy – copies, try – tries"],["-ss, -ch, -sh, -x → +es","wash – washes, watch – watches, finish – finishes"],["Исключения","go – goes, do – does, have – has"]]}]},
+{id:"tenses",title:"Времена (Tenses)",tag:"Tenses",desc:"Все формулы в одной таблице",blocks:[
+{t:"tgrid"},
+{t:"note",x:"**Как запомнить:** Simple – факт, Continuous – процесс, Perfect – результат к моменту, Perfect Continuous – сколько это длилось."},
+{t:"h",x:"Отрицание и вопрос"},
+{t:"table",head:["Время","−","?"],rows:[
+["Present Simple","don’t / doesn’t + V","Do / Does + подлеж. + V?"],
+["Past Simple","didn’t + V","Did + подлеж. + V?"],
+["Future Simple","won’t + V","Will + подлеж. + V?"],
+["Present Cont.","am not / isn’t / aren’t + V-ing","Am / Is / Are + подлеж. + V-ing?"],
+["Past Cont.","wasn’t / weren’t + V-ing","Was / Were + подлеж. + V-ing?"],
+["Future Cont.","won’t be + V-ing","Will + подлеж. + be + V-ing?"],
+["Present Perfect","haven’t / hasn’t + V3","Have / Has + подлеж. + V3?"],
+["Past Perfect","hadn’t + V3","Had + подлеж. + V3?"],
+["Future Perfect","won’t have + V3","Will + подлеж. + have + V3?"]]},
+{t:"h",x:"Маркеры времени"},
+{t:"table",head:["Present","Past","Future"],rows:[
+["usually, often, always, rarely, sometimes, every…","yesterday, last…, …ago, in…","tomorrow, next…, soon"],
+["now, at the moment","at 3 o’clock yesterday, the whole day on Monday","the whole day tomorrow, from…till…, at…o’clock tomorrow evening"],
+["just, already, yet, ever, never, so far, lately, recently","while – описание, when – одновременные действия","by the time you come, by January"]]},
+{t:"h",x:"to be и to have"},
+{t:"p",x:"**be:** I am / he, she, it is / we, you, they are; прошлое was / were.  **have:** have / has; прошлое had."}]},
+{id:"passive",title:"Passive Voice",tag:"Grammar",desc:"Страдательный залог",blocks:[
+{t:"table",head:["","Indefinite","Continuous","Perfect"],rows:[
+["Present","am/is/are + V3","am/is/are + being + V3","have/has + been + V3"],
+["Past","was/were + V3","was/were + being + V3","had + been + V3"],
+["Future","will be + V3","—","will have + been + V3"]]},
+{t:"ex",items:[["Usually houses are built in 8 months.","Обычно дома строят 8 месяцев."],["This house is being built now.","Этот дом строится сейчас."],["This house has been already built.","Этот дом уже построен."],["This house was built last year.","Этот дом был построен в прошлом году."],["When I came last year this house was being built.","Когда я в прошлом году приехал, этот дом строился."],["This house had been built before I came.","Этот дом был построен до того, как я приехал."],["This house will be built next year.","Этот дом будет построен в следующем году."],["This house will have been already built by January.","Этот дом уже будет построен к январю."]]},
+{t:"note",x:"**by** – перед одушевлёнными, **with** – перед неодушевлёнными."}]},
+{id:"modals",title:"Модальные глаголы",tag:"Grammar",desc:"Формы и эквиваленты",blocks:[
+{t:"table",head:["Глагол","Значение","Present","Past","Future"],rows:[
+["can / to be able to","мочь, уметь","can / am, is, are able to","could / was, were able to","will be able to"],
+["may / to be allowed to","мочь, иметь разрешение","may / am, is, are allowed to","might / was, were allowed to","will be allowed to"],
+["must","быть должным","must","—","—"],
+["ought to","следует","ought to","—","—"],
+["to have to","вынужден","have / has to","had to","will have to"],
+["to be to","должен (по плану)","am, is, are to","was, were to","—"],
+["shall","обязан, должен","—","—","shall"],
+["should","следует","should","—","—"],
+["will","желать, намереваться","—","—","will"],
+["would","желать; вероятно; бывало","—","would","—"],
+["need","нуждаться","need","—","—"]]}]},
+{id:"conditionals",title:"Conditionals",tag:"Grammar",desc:"Условные предложения, 4 типа",blocks:[
+{t:"cards",items:[
+["0","законы природы, всегда верно","If + Present Simple, Present Simple","If water freezes, it turns to ice.","c1"],
+["1","реальное условие, настоящее и будущее","If + Present Simple, will + V","If I buy a ticket, I will go to a concert.","c2"],
+["2","нереальное, фантазии (если бы)","If + Past Simple, would + V","If I won the lottery, I would buy a house.","c3"],
+["3","нереальное прошлое, сожаления","If + Past Perfect, would have + V3","If I had prepared for that test, I wouldn’t have failed it.","c4"]]},
+{t:"note",x:"Во 2 типе to be имеет форму **were** для всех лиц: If I were you, I wouldn’t go there – на твоём месте, если бы я был тобой."}]},
+{id:"wordformation",title:"Словообразование",tag:"Vocabulary",desc:"Суффиксы и приставки",blocks:[
+{t:"sec",x:"Существительные"},
+{t:"h",x:"От глагола"},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-er/-or","teach, work, mix","teacher, worker, mixer"],["-er/-ee","employ","employer, employee"],["-ation, -ition","invite, revolt","invitation, revolution"],["-ing","build, dance, swim","building, dancing, swimming"],["-ment","agree, develop","agreement, development"],["-ion, -tion, -sion","discuss, produce","discussion, production"],["-ent, -ant","assist, study","assistant, student"],["-ence, -ance","perform, depend","performance, dependence"]]},
+{t:"h",x:"От существительного"},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ist","science, tour","scientist, tourist"],["-an, -ian","Republic, America","Republican, American"],["-ship","friend","friendship, partnership"],["-hood","brother","brotherhood, childhood, motherhood"],["-ese","China, Japan","Chinese, Japanese"],["-ess","actor, lion","actress, lioness"]]},
+{t:"h",x:"От прилагательного или наречия"},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ness","happy, midly","happiness, mildness"],["-ty, -ity","certain, safe, secure","certainty, safety, security"]]},
+{t:"sec",x:"Прилагательные"},
+{t:"h",x:"От существительного"},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ful","beauty","beautiful"],["-less","water","waterless"],["-able","comfort","comfortable"],["-al","form","formal"],["-ic","history","historic"],["-y","mud, rain","muddy, rainy"]]},
+{t:"h",x:"От глагола"},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ive","act, effect","active, effective"],["-ant","observe","observant"],["-ible","access","accessible"],["-able","drink","drinkable"],["-ent","persist","persistent"],["-ing","excite","exciting"]]},
+{t:"h",x:"Составные"},
+{t:"table",head:["Модель","Пример"],rows:[["сущ. + прил.","snow-white"],["прил. + прил.","dark-blue"],["наречие + причастие","well-built"],["прил. + сущ. (+ суффикс)","barefooted, bareheaded, black-haired, middle-aged"]]},
+{t:"sec",x:"Приставки"},
+{t:"h",x:"Отрицательные"},
+{t:"table",head:["Приставка","Особенность","Примеры"],rows:[["un-","самая употребительная","unable, untidy, unpleasant, unfriendly"],["im-","перед m, p","impossible, immoral, impatient, important"],["il-","перед l","illiterate, illegal"],["ir-","перед r","irritated, irresponsible, irrational"]]},
+{t:"h",x:"Другие"},
+{t:"table",head:["Приставка","Значение","Примеры"],rows:[["in-","очень редко","inactive, inaccurate, invisible"],["dis-","лишение","disable, disappointed"],["non-","лишение","non-profitable"],["mis-","лишение","mistaken"],["re-","повтор","replay, repeat, remake"],["pre-","до","pre-war, precaution (предосторожность)"],["post-","после","post-war"],["ex-","бывший","ex-wife, ex-president"],["en-","глаголы от существительных","endanger, enchain"],["over-","сверх меры","overcharge, overweight"],["under-","недостаточно","underpay, underestimate"],["sub-","под","submarine, subdue"]]},
+{t:"h",x:"Числовые (латинские и греческие)"},
+{t:"table",head:["Приставка","Значение","Примеры"],rows:[["mono-, uni-","один","monopoly, unison"],["bi-, di-, duo-","два, дважды","bilingual, diagonal, duet"],["tri-","три","triangle"],["quad-, tetra-","четыре","quadruped, tetrameter"],["quin-","пять","quintuplet"],["hexa-, sex-","шесть","hexagon, sextet"],["sept-","семь","septennial"],["oct-, octa-, octo-","восемь","octave, octopus"],["pona-","девять","nonagenarian"],["dec-, deci-","десять","decimal"],["cent-, hec-, hecta-","сто","century, hectare"]]}]}
+];
+var TG={cols:[["Simple","факт, привычка","c1"],["Continuous","процесс","c2"],["Perfect","результат","c3"],["Perfect Continuous","длительность","c4"]],rows:[
+["Present",[["V / V+s","I talk to John every day."],["am / is / are + V-ing","I am talking to John now."],["have / has + V3","I have talked to John."],["have / has been + V-ing","I have been talking for two hours."]]],
+["Past",[["V2 / V+ed","I talked to John yesterday."],["was / were + V-ing","I was talking at 5 yesterday."],["had + V3","I had talked by the time you came."],["had been + V-ing","I had been talking for two hours by the time you came."]]],
+["Future",[["will + V","I will talk to John tomorrow."],["will be + V-ing","I will be talking tomorrow at 5."],["will have + V3","I will have talked by the time you come."],["will have been + V-ing","I will have been talking for two hours by the time you come."]]]]};
+var PROMPT='Я присылаю фото конспекта по английскому. Преобразуй его в JSON строго такого формата и верни только JSON:\n{"topics":[{"id":"kebab-case-id","title":"Название","tag":"Grammar|Tenses|Vocabulary","desc":"Короткое описание","blocks":[\n{"t":"h","x":"Подзаголовок"},\n{"t":"p","x":"Текст, **жирный**"},\n{"t":"note","x":"Заметка"},\n{"t":"table","head":["Кол1","Кол2"],"rows":[["a","b"]]},\n{"t":"ex","items":[["English sentence","Перевод"]]}]}]}';
+function ld(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var custom=ld("en_custom",[]),done=ld("en_done",{}),q="";
+function all(){var m={};BASE.concat(custom).forEach(function(t){m[t.id]=t});return Object.keys(m).map(function(k){return m[k]})}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")}
+var app=document.getElementById("app");
+function block(b){
+ if(b.t==="h")return "<h3>"+esc(b.x)+"</h3>";
+ if(b.t==="p")return '<p class="blk">'+fmt(b.x)+"</p>";
+ if(b.t==="note")return '<div class="note blk">'+fmt(b.x)+"</div>";
+ if(b.t==="ex")return '<div class="blk">'+(b.items||[]).map(function(i){return '<div class="ex">'+esc(i[0])+(i[1]?"<em>"+esc(i[1])+"</em>":"")+"</div>"}).join("")+"</div>";
+ if(b.t==="table")return '<div class="wrap blk"><table><tr>'+(b.head||[]).map(function(h){return "<th>"+esc(h)+"</th>"}).join("")+"</tr>"+(b.rows||[]).map(function(r){return "<tr>"+r.map(function(c){return "<td>"+fmt(c)+"</td>"}).join("")+"</tr>"}).join("")+"</table></div>";
+ if(b.t==="sec")return '<div class="sec">'+esc(b.x)+"</div>";
+ if(b.t==="cards")return (b.items||[]).map(function(i){return '<div class="cd"><div class="n '+i[4]+'">'+esc(i[0])+'</div><div><div class="f">'+esc(i[2])+'</div><div class="w">'+esc(i[1])+'</div><div class="e">'+esc(i[3])+"</div></div></div>"}).join("");
+ if(b.t==="tgrid")return '<div class="tg blk"><table><tr><th></th>'+TG.cols.map(function(c){return '<th class="'+c[2]+'">'+c[0]+"<small>"+c[1]+"</small></th>"}).join("")+"</tr>"+TG.rows.map(function(r){return "<tr><td>"+r[0]+"</td>"+r[1].map(function(c,k){return '<td class="'+TG.cols[k][2]+'"><span class="f">'+esc(c[0])+'</span><span class="e">'+esc(c[1])+"</span></td>"}).join("")+"</tr>"}).join("")+"</table></div>";
+ return "";
+}
+function home(){
+ var L=all(),n=L.filter(function(t){return done[t.id]}).length,f=L.filter(function(t){return (t.title+" "+(t.desc||"")).toLowerCase().indexOf(q.toLowerCase())>-1});
+ app.innerHTML='<h1>English Notes</h1><p class="sub">Выучено '+n+" из "+L.length+'</p><div class="prog"><i style="width:'+(L.length?n/L.length*100:0)+'%"></i></div><input type="search" id="s" placeholder="Поиск по темам" value="'+esc(q)+'">'+
+ f.map(function(t){return '<button class="item" data-id="'+esc(t.id)+'"><span class="dot '+(done[t.id]?"on":"")+'">✓</span><span><b>'+esc(t.title)+"</b><small>"+esc(t.desc||"")+'</small></span><span class="tag">'+esc(t.tag||"")+"</span></button>"}).join("")||'<p class="sub">Ничего не найдено</p>';
+ var s=document.getElementById("s");s.oninput=function(){q=s.value;var p=s.selectionStart;home();var e=document.getElementById("s");e.focus();e.setSelectionRange(p,p)};
+ app.querySelectorAll(".item").forEach(function(b){b.onclick=function(){location.hash="t-"+b.dataset.id}});
+}
+function topic(id){
+ var t=all().filter(function(x){return x.id===id})[0];if(!t)return home();
+ app.innerHTML='<button class="back">‹ Все темы</button><h2>'+esc(t.title)+"</h2>"+(t.blocks||[]).map(block).join("")+'<button class="btn wide '+(done[id]?"":"pri")+'" id="dn">'+(done[id]?"Снять отметку «выучено»":"Отметить как выученное")+"</button>";
+ app.querySelector(".back").onclick=function(){location.hash="home"};
+ document.getElementById("dn").onclick=function(){done[id]=!done[id];sv("en_done",done);topic(id)};
+ window.scrollTo(0,0);
+}
+function imp(){
+ app.innerHTML='<h1>Импорт тем</h1><p class="sub">Отправь Claude фото конспекта вместе с этим запросом, получи JSON и вставь сюда.</p><button class="btn wide" id="cp">Скопировать запрос для Claude</button><h3>JSON</h3><textarea id="ta" placeholder=\'{"topics":[...]}\'></textarea><button class="btn pri wide" id="go">Добавить темы</button><label class="btn wide" style="display:grid;place-items:center">Загрузить файл .json<input type="file" id="fl" accept=".json,application/json" hidden></label><div class="msg" id="ms"></div><h3>Мои темы ('+custom.length+')</h3>'+
+ (custom.map(function(t){return '<button class="item" data-del="'+esc(t.id)+'"><span><b>'+esc(t.title)+'</b><small>Нажми, чтобы удалить</small></span></button>'}).join("")||'<p class="sub">Пока нет добавленных тем</p>')+'<h3>Формат</h3><pre>'+esc(PROMPT)+"</pre>";
+ var ms=document.getElementById("ms");
+ function add(txt){try{var d=JSON.parse(txt),a=Array.isArray(d)?d:d.topics;if(!a||!a.length)throw 0;var c=0;a.forEach(function(t){if(t&&t.id&&t.title&&Array.isArray(t.blocks)){custom=custom.filter(function(x){return x.id!==t.id});custom.push(t);c++}});if(!c)throw 0;sv("en_custom",custom);imp();document.getElementById("ms").innerHTML='<span class="ok">Добавлено тем: '+c+"</span>"}catch(e){ms.innerHTML='<span class="err">Не получилось прочитать JSON. Проверь формат.</span>'}}
+ document.getElementById("go").onclick=function(){add(document.getElementById("ta").value)};
+ document.getElementById("fl").onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){add(r.result)};r.readAsText(f)};
+ document.getElementById("cp").onclick=function(){try{navigator.clipboard.writeText(PROMPT);ms.innerHTML='<span class="ok">Скопировано</span>'}catch(e){ms.innerHTML="Выдели и скопируй текст ниже"}};
+ app.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){if(confirm("Удалить тему?")){custom=custom.filter(function(x){return x.id!==b.dataset.del});sv("en_custom",custom);imp()}}});
+}
+function route(){var h=location.hash.slice(1);document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.v===(h==="import"?"import":"home"))&&b.dataset.v!=="theme"});if(h==="import")imp();else if(h.indexOf("t-")===0)topic(h.slice(2));else home()}
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){var v=b.dataset.v;if(v==="theme"){var r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark";try{localStorage.setItem("en_theme",r.dataset.theme)}catch(e){}}else location.hash=v}});
+try{var th=localStorage.getItem("en_theme");if(th)document.documentElement.dataset.theme=th}catch(e){}
+window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
