@@ -81,6 +81,19 @@ td:first-child{font-weight:700}
 .cd .n{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font:800 22px Lora,serif}
 .cd .f{font-weight:800;font-size:16px;line-height:1.35}.cd .w{color:var(--mute);font-size:14px;margin-top:2px}.cd .e{margin-top:8px;font-size:15px}
 .n.c1{background:var(--b1);color:var(--k1)}.n.c2{background:var(--b2);color:var(--k2)}.n.c3{background:var(--b3);color:var(--k3)}.n.c4{background:var(--b4);color:var(--k4)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#app.go>*{animation:rise .35s cubic-bezier(.2,.7,.3,1) both}
+#app.go>*:nth-child(n+3){animation-delay:.05s}#app.go>*:nth-child(n+6){animation-delay:.1s}#app.go>*:nth-child(n+9){animation-delay:.15s}
+body{transition:background .3s,color .3s}
+.item,.btn,nav button,.dot{transition:transform .15s,background .25s,border-color .25s,color .25s}
+.item:hover{border-color:var(--acc)}.btn:active{transform:scale(.98)}
+.prog i{transition:width .5s ease}
+.fb{animation:pop .25s both}.item.good{border-color:var(--acc);background:var(--accbg)}.item.bad{border-color:var(--warn);animation:shake .3s}
+input.ans{width:100%;font:inherit;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);margin:6px 0}
+#rv{margin-top:12px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -145,7 +158,7 @@ var BASE=[
 {t:"h",x:"От существительного"},
 {t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ist","science, tour","scientist, tourist"],["-an, -ian","Republic, America","Republican, American"],["-ship","friend","friendship, partnership"],["-hood","brother","brotherhood, childhood, motherhood"],["-ese","China, Japan","Chinese, Japanese"],["-ess","actor, lion","actress, lioness"]]},
 {t:"h",x:"От прилагательного или наречия"},
-{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ness","happy, midly","happiness, mildness"],["-ty, -ity","certain, safe, secure","certainty, safety, security"]]},
+{t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ness","happy, mild","happiness, mildness"],["-ty, -ity","certain, safe, secure","certainty, safety, security"]]},
 {t:"sec",x:"Прилагательные"},
 {t:"h",x:"От существительного"},
 {t:"table",head:["Суффикс","Исходное","Производное"],rows:[["-ful","beauty","beautiful"],["-less","water","waterless"],["-able","comfort","comfortable"],["-al","form","formal"],["-ic","history","historic"],["-y","mud, rain","muddy, rainy"]]},
@@ -159,7 +172,7 @@ var BASE=[
 {t:"h",x:"Другие"},
 {t:"table",head:["Приставка","Значение","Примеры"],rows:[["in-","очень редко","inactive, inaccurate, invisible"],["dis-","лишение","disable, disappointed"],["non-","лишение","non-profitable"],["mis-","лишение","mistaken"],["re-","повтор","replay, repeat, remake"],["pre-","до","pre-war, precaution (предосторожность)"],["post-","после","post-war"],["ex-","бывший","ex-wife, ex-president"],["en-","глаголы от существительных","endanger, enchain"],["over-","сверх меры","overcharge, overweight"],["under-","недостаточно","underpay, underestimate"],["sub-","под","submarine, subdue"]]},
 {t:"h",x:"Числовые (латинские и греческие)"},
-{t:"table",head:["Приставка","Значение","Примеры"],rows:[["mono-, uni-","один","monopoly, unison"],["bi-, di-, duo-","два, дважды","bilingual, diagonal, duet"],["tri-","три","triangle"],["quad-, tetra-","четыре","quadruped, tetrameter"],["quin-","пять","quintuplet"],["hexa-, sex-","шесть","hexagon, sextet"],["sept-","семь","septennial"],["oct-, octa-, octo-","восемь","octave, octopus"],["pona-","девять","nonagenarian"],["dec-, deci-","десять","decimal"],["cent-, hec-, hecta-","сто","century, hectare"]]}]}
+{t:"table",head:["Приставка","Значение","Примеры"],rows:[["mono-, uni-","один","monopoly, unison"],["bi-, di-, duo-","два, дважды","bilingual, diagonal, duet"],["tri-","три","triangle"],["quad-, tetra-","четыре","quadruped, tetrameter"],["quin-","пять","quintuplet"],["hexa-, sex-","шесть","hexagon, sextet"],["sept-","семь","septennial"],["oct-, octa-, octo-","восемь","octave, octopus"],["nona-","девять","nonagenarian"],["dec-, deci-","десять","decimal"],["cent-, hec-, hecta-","сто","century, hectare"]]}]}
 ];
 var TG={cols:[["Simple","факт, привычка","c1"],["Continuous","процесс","c2"],["Perfect","результат","c3"],["Perfect Continuous","длительность","c4"]],rows:[
 ["Present",[["V / V+s","I talk to John every day."],["am / is / are + V-ing","I am talking to John now."],["have / has + V3","I have talked to John."],["have / has been + V-ing","I have been talking for two hours."]]],
@@ -211,7 +224,203 @@ function imp(){
 function route(){var h=location.hash.slice(1);document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.v===(h==="import"?"import":"home"))&&b.dataset.v!=="theme"});if(h==="import")imp();else if(h.indexOf("t-")===0)topic(h.slice(2));else home()}
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){var v=b.dataset.v;if(v==="theme"){var r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark";try{localStorage.setItem("en_theme",r.dataset.theme)}catch(e){}}else location.hash=v}});
 try{var th=localStorage.getItem("en_theme");if(th)document.documentElement.dataset.theme=th}catch(e){}
-window.addEventListener("hashchange",route);route();
+
+</script>
+<script>
+(function(){
+var W=BASE.filter(function(t){return t.id=="wordformation"})[0].blocks;
+function T(h,r){W.push({t:"table",head:h,rows:r})}
+W.push({t:"sec",x:"Как решать Word Formation"},{t:"h",x:"1. Части речи"});
+T(["Часть речи","Значение, вопросы","Как узнать","Что рядом","Примеры"],[
+["Noun — сущ.","предмет, человек, понятие; кто? что?","подлежащее или дополнение; можно поставить the / my","a / an / the, my, his, прилагательное, предлог","a decision, the beauty, her kindness"],
+["Verb — глагол","действие, состояние; что делать?","сказуемое; есть время","подлежащее перед ним, to, can / will / do","to decide, will help, has changed"],
+["Adjective — прил.","признак предмета; какой?","стоит перед существительным или после be, seem, look, feel, become","very, too, quite, so; существительное после","a beautiful day, She looks happy"],
+["Adverb — нареч.","признак действия или признака; как? когда? где?","описывает глагол, прилагательное или всё предложение","рядом с глаголом, перед прилагательным, в начале предложения","speaks slowly, extremely cold, Luckily, …"]]);
+W.push({t:"h",x:"2. Главная таблица суффиксов и приставок"},{t:"note",x:"Это **частые закономерности, а не абсолютные правила**: у каждого элемента бывают исключения, словарь важнее."});
+var H=["Элемент","Обычно образует","Значение","Примеры","Особенности"];
+W.push({t:"h",x:"Существительные"});T(H,[
+["-tion / -sion","сущ. от глагола","действие, результат","decide – decision (решение), educate – education","-ate → -ation; -de → -sion"],
+["-ment","сущ. от глагола","результат, процесс","agree – agreement (соглашение), develop – development (развитие)","основа не меняется"],
+["-ness","сущ. от прил.","качество, состояние","kind – kindness (доброта), happy – happiness (счастье)","-y → -i-"],
+["-ity","сущ. от прил.","качество","possible – possibility (возможность), active – activity (активность)","основа часто меняется"],
+["-er / -or","сущ. от глагола","тот, кто делает","teach – teacher (учитель), act – actor (актёр)","-ee — тот, с кем делают: employee"],
+["-ance / -ence","сущ. от глагола или прил.","действие, качество","perform – performance (выступление), different – difference (разница)","выбор -ance/-ence надо запоминать"]]);
+W.push({t:"h",x:"Прилагательные"});T(H,[
+["-ful","прил. от сущ.","полный чего-то","help – helpful (полезный), beauty – beautiful (красивый)","-y → -i-"],
+["-less","прил. от сущ.","без","care – careless (беспечный), help – helpless (беспомощный)","careless ≠ «не careful» по форме, но близко по смыслу"],
+["-able / -ible","прил. от глагола","можно сделать","comfort – comfortable (удобный), access – accessible (доступный)","-ible реже, запоминать"],
+["-ous","прил. от сущ.","обладающий качеством","danger – dangerous (опасный), fame – famous (знаменитый)","основа может меняться"],
+["-ive","прил. от глагола","склонный, действующий","act – active (активный), create – creative (творческий)",""],
+["-al","прил. от сущ.","относящийся к","nation – national (национальный), culture – cultural (культурный)",""],
+["-ic","прил. от сущ.","относящийся к","economy – economic (экономический), history – historic (исторический)","historic ≠ historical по значению"],
+["-y","прил. от сущ.","с чем-то, похожий","rain – rainy (дождливый), luck – lucky (удачливый)","часто удваивается согласная: sun – sunny"]]);
+W.push({t:"h",x:"Наречия"});T(H,[
+["-ly","нареч. от прил.","как? каким образом?","slow – slowly (медленно), careful – carefully (осторожно)","easy – easily; friendly, lovely, lonely — это прилагательные!"],
+["-ward / -wards","нареч. направления","в сторону","forward (вперёд), backward (назад), upward (вверх)","в британском чаще -wards"]]);
+W.push({t:"h",x:"Глаголы"});T(H,[
+["-ize / -ise","глагол от сущ. или прил.","делать каким-то","modern – modernize (модернизировать), real – realize (осознавать)","-ize — американский, -ise — британский вариант"],
+["-en","глагол от прил. или сущ.","делать, становиться","wide – widen (расширять), short – shorten (сокращать)","strength – strengthen"],
+["-ify","глагол от сущ. или прил.","делать","simple – simplify (упрощать), beauty – beautify (украшать)","clear – clarify (прояснять)"]]);
+W.push({t:"h",x:"Отрицательные приставки"});T(["Приставка","Когда","Значение","Примеры","Особенности"],[
+["un-","самая частая, перед любой буквой","не-, обратное действие","happy – unhappy (несчастный), do – undo (отменить)",""],
+["in-","прил. и сущ.","не-","active – inactive (неактивный), correct – incorrect (неверный)","перед l, m, p, r меняется"],
+["im-","перед m и p","не-","possible – impossible (невозможный), polite – impolite (невежливый)","форма in-"],
+["il-","перед l","не-","legal – illegal (незаконный), logical – illogical (нелогичный)","форма in-"],
+["ir-","перед r","не-","regular – irregular (неправильный), responsible – irresponsible (безответственный)","форма in-"],
+["dis-","глаголы, прил., сущ.","не-, противоположное","agree – disagree (не соглашаться), like – dislike (не любить), honest – dishonest","dis-: часто глагол и отрицание"],
+["mis-","глаголы и сущ.","неверно, ошибочно","understand – misunderstand (неверно понять), use – misuse (неправильно использовать)","не «не-», а «ошибочно»"]]);
+W.push({t:"h",x:"3. Алгоритм решения"});T(["Шаг","Что делать"],[
+["1","Прочитай предложение целиком."],["2","Пойми общий смысл."],["3","Переведи на русский."],["4","Посмотри на слово в скобках: какая оно часть речи?"],
+["5","Определи, какая часть речи нужна в пропуске."],["6","Посмотри на слова до и после пропуска."],["7","Проверь по смыслу: нужна ли отрицательная форма (but, although, не…)?"],
+["8","Подбери суффикс или приставку."],["9","Проверь результат: подходит ли слово по смыслу и грамматике, нет ли ошибки в написании?"]]);
+T(["Рядом с пропуском","Часто нужно","Пример"],[
+["a / an / the, my, his, her","существительное (или прилагательное + существительное)","a ___ (decide) → a decision"],
+["very, too, quite, so","прилагательное или наречие","very ___ (care) → very careful"],
+["be, seem, look, feel, become","прилагательное","The room feels ___ (comfort) → comfortable"],
+["предлог (in, of, for, about)","существительное или герундий","good at ___ (swim) → swimming"],
+["пропуск стоит перед существительным","прилагательное","a ___ day (sun) → sunny"],
+["после глагола, отвечает на «как?»","наречие","She sings ___ (beauty) → beautifully"],
+["but, although, however, по смыслу «наоборот»","отрицательная форма","but he was ___ (happy) → unhappy"]]);
+W.push({t:"note",x:"Это **подсказки, а не безошибочные правила**: всегда проверяй смысл предложения."});
+W.push({t:"h",x:"4. Времена в предложениях Word Formation"});
+T(["Время","Когда","Формула","Маркеры","Пример"],[
+["Present Simple","факты, привычки","V / V+s; do / does + V","usually, every day, often","She works every day. — Она работает каждый день."],
+["Past Simple","завершённое действие в прошлом","V2 / V+ed; did + V","yesterday, ago, last…","We watched a film yesterday. — Вчера мы смотрели фильм."],
+["Present Continuous","процесс сейчас","am / is / are + V-ing","now, at the moment","He is reading now. — Он сейчас читает."],
+["Present Perfect","результат к настоящему моменту","have / has + V3","just, already, yet, ever, since, for","I have finished. — Я закончил."],
+["Past Perfect","до другого момента в прошлом","had + V3","by the time, before, already","She had left before I came. — Она ушла до моего прихода."],
+["Future Simple","будущее, решение, прогноз","will + V","tomorrow, next…, soon","I will call you. — Я позвоню тебе."]]);
+T(["Слово","Что подсказывает"],[
+["do / does","Present Simple (вопрос или отрицание), дальше V без -s"],["did","Past Simple, дальше V"],
+["am / is / are","+ V-ing — Present Continuous; + V3 — Passive"],["was / were","+ V-ing — Past Continuous; + V3 — Passive в прошлом"],
+["have / has","+ V3 — Present Perfect"],["had","+ V3 — Past Perfect"],["will","Future, дальше V"]]);
+W.push({t:"note",x:"Время определяется **по всей конструкции**, а не по одному слову: is + V-ing — это одно время, is + V3 — уже другое."});
+W.push({t:"h",x:"5. Семейства слов"});
+T(["Слово","Сущ.","Прил.","Нареч.","Глагол"],[
+["help (помощь)","help","helpful / helpless","helpfully","help"],
+["care (забота)","care","careful / careless","carefully / carelessly","care"],
+["beauty (красота)","beauty","beautiful","beautifully","beautify"],
+["success (успех)","success","successful","successfully","succeed"],
+["difference (разница)","difference","different","differently","differ"],
+["danger (опасность)","danger","dangerous","dangerously","endanger"],
+["possible (возможный)","possibility","possible / impossible","possibly","—"],
+["comfort (комфорт)","comfort","comfortable / uncomfortable","comfortably","comfort"],
+["decide (решать)","decision","decisive","decisively","decide"],
+["use (польза)","use","useful / useless","usefully","use"]]);
+var BK={
+"present-simple-3rd":[
+["m","She ___ to school every day.",["go","goes","gos","going"],1,"go → goes: исключение, как do → does."],
+["f","He ___ (study) English.",["studies"],"Согласная + y → меняем y на i и добавляем -es."],
+["f","My brother ___ (watch) TV in the evening.",["watches"],"После -ch добавляем -es."],
+["x","She play tennis on Sundays.",["She plays tennis on Sundays"],"С he / she / it у глагола нужно -s."],
+["m","He ___ a new car.",["have","has","haves","having"],1,"have → has: исключение."],
+["x","Does he works here?",["Does he work here"],"После does глагол стоит без -s."],
+["m","Как будет 3-е лицо от «play»?",["plays","plaies","playes","plas"],0,"Гласная + y: просто +s."]],
+"tenses":[
+["m","I ___ TV now.",["am watching","watch","have watched","watched"],0,"now — Present Continuous: am / is / are + V-ing."],
+["f","She ___ (live) here since 2010.",["has lived"],"since — Present Perfect: have / has + V3."],
+["m","By the time you came, I ___ the work.",["had finished","finished","have finished","was finishing"],0,"Действие закончилось раньше другого в прошлом — Past Perfect."],
+["f","Tomorrow he ___ (call) you.",["will call"],"tomorrow — Future Simple: will + V."],
+["x","He don't like coffee.",["He doesn't like coffee"],"С he / she / it отрицание — doesn't."],
+["m","Yesterday we ___ to the cinema.",["went","go","have gone","were going"],0,"yesterday — Past Simple, go → went (V2)."],
+["m","Формула Past Continuous:",["was / were + V-ing","had + V3","did + V","have been + V-ing"],0,"Past Continuous: was / were + V-ing, процесс в прошлом."]],
+"passive":[
+["m","This house ___ last year.",["was built","is built","has been built","will be built"],0,"last year — Past Simple Passive: was / were + V3."],
+["f","The room ___ (clean) at the moment.",["is being cleaned"],"Present Continuous Passive: am / is / are + being + V3."],
+["x","The book was wrote by Tolkien.",["The book was written by Tolkien"],"В пассиве нужна третья форма: write – wrote – written."],
+["m","Формула Present Perfect Passive:",["have / has + been + V3","am / is / are + V3","had + been + V3","will be + V3"],0,"Present Perfect Passive: have / has + been + V3."],
+["f","A new bridge ___ (build) next year.",["will be built"],"Future Passive: will be + V3."],
+["m","Исполнитель — человек: the book was written ___ him.",["by","with","of","from"],0,"by — перед одушевлёнными, with — перед неодушевлёнными."]],
+"modals":[
+["m","I ___ stay at home yesterday (вынужден).",["must","had to","musted","ought to"],1,"У must нет прошедшей формы, используем had to."],
+["f","Tomorrow I ___ (have to) work.",["will have to"],"Будущее время от have to — will have to."],
+["m","У какого глагола нет формы прошедшего времени?",["must","can","have to","be able to"],0,"must не имеет Past; вместо него had to."],
+["x","She can to swim.",["She can swim"],"После модального глагола to не нужно."],
+["m","Эквивалент may (иметь разрешение):",["be allowed to","be able to","have to","ought to"],0,"may = be allowed to."],
+["f","Next year she ___ speak French. (be able to)",["will be able to"],"can в будущем заменяем на will be able to."]],
+"conditionals":[
+["m","If water freezes, it ___ to ice.",["turns","will turn","would turn","turned"],0,"Нулевой тип: Present Simple, Present Simple."],
+["f","If I ___ (buy) a ticket, I will go to the concert.",["buy"],"Первый тип: после if Present Simple, не will."],
+["m","If I won the lottery, I ___ a house.",["would buy","will buy","bought","would have bought"],0,"Второй тип: If + Past Simple, would + V."],
+["f","If I ___ (prepare) for the test, I wouldn't have failed it.",["had prepared"],"Третий тип: If + Past Perfect, would have + V3."],
+["x","If I will see him, I will tell him.",["If I see him, I will tell him"],"После if в первом типе will не ставится."],
+["m","If I ___ you, I wouldn't go there.",["was","were","am","would be"],1,"Во 2 типе to be → were для всех лиц."]],
+"wordformation":[
+["m","Какой суффикс обычно образует существительные?",["-ness","-ous","-ly","-ize"],0,"-ness: kind → kindness. -ous — прил., -ly — нареч., -ize — глагол."],
+["m","___possible (отрицание)",["un-","in-","im-","ir-"],2,"Перед p и m: im- → impossible."],
+["m","___legal (отрицание)",["un-","il-","im-","ir-"],1,"Перед l: il- → illegal."],
+["m","___responsible (отрицание)",["un-","il-","im-","ir-"],3,"Перед r: ir- → irresponsible."],
+["f","Образуйте существительное от agree (суффикс -ment):",["agreement"],"agree + ment = agreement (соглашение)."],
+["f","Наречие от careful:",["carefully"],"careful + ly = carefully."],
+["x","He spoke very careful.",["He spoke very carefully"],"Описываем глагол spoke — нужно наречие."],
+["m","Суффикс -less означает:",["без","очень","снова","до"],0,"-less = без: careless, helpless."]],
+"wfp1":[
+["w","She is a very ___ person.","care",["careful"],"careful: care + -ful. Наречие не подходит, слово описывает существительное person.",["Она очень ___ человек.","Нужно прилагательное.","После very и перед существительным person.","Суффикс -ful: «полный чего-то»."]],
+["w","He did the work ___.","easy",["easily"],"easily: easy → easi + ly. Описываем действие did, значит наречие.",["Он сделал работу ___.","Нужно наречие (как?).","Слово после глагола did the work.","Суффикс -ly, y → i."]],
+["w","Her ___ made everyone happy.","kind",["kindness"],"kindness: kind + -ness. После her нужно существительное.",["Её ___ сделала всех счастливыми.","Нужно существительное.","После her, перед глаголом made — подлежащее.","Суффикс -ness."]]],
+"wfp2":[
+["w","I made a ___ to move to London.","decide",["decision"],"decision: decide → decision. Прилагательное decisive не подходит после артикля a.",["Я принял ___ переехать в Лондон.","Существительное.","После артикля a, дополнение к made.","Суффикс -sion: -de → -sion."]],
+["w","It is ___ to park here.","legal",["illegal"],"illegal: il- + legal. По смыслу нужен запрет, значит отрицание.",["Здесь ___ парковаться.","Прилагательное после is.","По смыслу «запрещено» — отрицательная форма.","Приставка il- перед l."]],
+["w","His ___ at the exam made him proud.","succeed",["success"],"success: сущ. от succeed. После his нужно существительное.",["Его ___ на экзамене сделал его гордым.","Существительное.","После притяжательного his, перед глаголом made.","Изменение основы: succeed → success."]]],
+"wfp3":[
+["w","They were ___ with the service, so they complained.","satisfy",["dissatisfied"],"dissatisfied: dis- + satisfied. Они жаловались, значит нужна отрицательная форма.",["Они были ___ сервисом, поэтому жаловались.","Прилагательное (причастие) после were.","По смыслу отрицание: они жаловались.","Приставка dis-, satisfy → satisfied."]],
+["w","She had been working ___ for hours without a break.","continue",["continuously","continually"],"continuously: continue → continuous + ly. Нужно наречие, описывающее глагол working.",["Она работала ___ часами без перерыва.","Наречие (как работала?).","Past Perfect Continuous, слово описывает действие.","continue → continuous → +ly."]],
+["w","The ___ of this medicine is proven by tests.","effective",["effectiveness"],"effectiveness: effective + -ness. После The нужно существительное.",["Эффективность этого лекарства доказана тестами.","Существительное.","После The, подлежащее, перед of.","Суффикс -ness от прилагательного."]]]
+};
+var TT={wfp1:"Word Formation: простой",wfp2:"Word Formation: средний",wfp3:"Word Formation: сложный"};
+var QS=ld("en_q",{}),WR=ld("en_wr",{}),S=null,sel={};
+function ttl(id){var t=all().filter(function(x){return x.id===id})[0];return t?t.title:TT[id]}
+function nz(s){return String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?]+$/,"").replace(/\s+/g," ").trim()}
+function shuf(a){a=a.slice();for(var i=a.length;i>1;){var j=Math.random()*i--|0,t=a[i];a[i]=a[j];a[j]=t}return a}
+function mk(ids,only){var p=[];ids.forEach(function(b){BK[b].forEach(function(d,i){var k=b+"|"+i;if(!only||WR[k])p.push({k:k,d:d})})});return p}
+function pick(ids,only){var p=shuf(mk(ids,only));return ids.length>1||only?p.slice(0,10):p}
+function run(list,ids,t){S={ids:ids,list:shuf(list),i:0,sc:0,ms:[],t:t};draw()}
+function ans(d){var t=d[0];return t=="m"?d[2][d[3]]:d[t=="w"?3:2][0]}
+function draw(){
+if(S.i>=S.list.length)return fin();
+var o=S.list[S.i],d=o.d,t=d[0],h,ex=(t=="f"||t=="x")?3:4,n=S.list.length;o.hn=0;o.done=0;
+var hd='<button class="back">‹ Выйти</button><p class="sub">'+esc(S.t)+' · '+(S.i+1)+' из '+n+'</p><div class="prog"><i style="width:'+S.i/n*100+'%"></i></div>';
+if(t=="m"){o.ord=shuf(d[2].map(function(_,i){return i}));h='<h2>'+esc(d[1])+'</h2>'+o.ord.map(function(j){return '<button class="item" data-j="'+j+'"><b>'+esc(d[2][j])+'</b></button>'}).join("")}
+else{h='<h3>'+(t=="x"?"Исправьте ошибку":t=="f"?"Вставьте слово или форму":"Образуйте нужное слово")+'</h3><h2>'+esc(d[1])+(t=="w"?' <span class="tag">'+esc(d[2]).toUpperCase()+'</span>':"")+'</h2><input class="ans" id="a" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ваш ответ"><button class="btn pri wide" id="ck">Проверить</button>'+(t=="w"?'<button class="btn wide" id="hb">Подсказка (0/4)</button><div id="hs"></div>':"")+'<button class="btn wide" id="sh">Показать ответ</button>'}
+app.innerHTML=hd+'<div id="q">'+h+'</div><div id="fb"></div>';window.scrollTo(0,0);
+app.querySelector(".back").onclick=function(){location.hash="home"};
+function res(ok,pj){if(o.done)return;o.done=1;if(ok){S.sc++;delete WR[o.k]}else{S.ms.push(o);WR[o.k]=1}sv("en_wr",WR);
+app.querySelectorAll("#q .item").forEach(function(b){b.disabled=true;if(+b.dataset.j==d[3])b.classList.add("good");else if(b===pj)b.classList.add("bad")});
+var a=document.getElementById("a");if(a)a.disabled=true;
+document.getElementById("fb").innerHTML='<div class="msg fb '+(ok?"ok":"err")+'"><b>'+(ok?"Верно ✓":"Неверно")+'</b>'+(ok?"":" Правильно: <b>"+esc(ans(d))+"</b>")+'</div><div class="note blk fb" style="margin-top:10px">'+fmt(d[ex])+'</div><button class="btn pri wide" id="nx">'+(S.i+1>=n?"Результат":"Дальше")+'</button>';
+document.getElementById("nx").onclick=function(){S.i++;draw()}}
+if(t=="m")app.querySelectorAll("#q .item").forEach(function(b){b.onclick=function(){res(+b.dataset.j==d[3],b)}});
+else{var a=document.getElementById("a");a.focus();
+document.getElementById("ck").onclick=function(){if(!a.value.trim())return;var u=nz(a.value);res(d[t=="w"?3:2].some(function(x){return nz(x)==u}))};
+a.onkeydown=function(e){if(e.key=="Enter")document.getElementById("ck").click()};
+document.getElementById("sh").onclick=function(){res(false)};
+if(t=="w")document.getElementById("hb").onclick=function(){if(o.hn>=4)return;var L=["Перевод и смысл","Часть речи","Окружение","Приставка / суффикс"];o.hn++;document.getElementById("hs").insertAdjacentHTML("beforeend",'<div class="ex fb"><em>'+L[o.hn-1]+'</em>'+esc(d[5][o.hn-1])+'</div>');this.textContent="Подсказка ("+o.hn+"/4)"}}}
+function fin(){var n=S.list.length,pc=Math.round(S.sc/n*100);
+if(S.ids.length==1&&!S.only){var r=QS[S.ids[0]]||{n:0,b:0};QS[S.ids[0]]={n:r.n+1,b:Math.max(r.b,pc),l:pc};sv("en_q",QS)}
+app.innerHTML='<h1>'+S.sc+' из '+n+'</h1><p class="sub">'+pc+'% · '+esc(S.t)+'</p><div class="prog"><i style="width:'+pc+'%"></i></div>'+(S.ms.length?'<h3>Ошибки</h3>'+S.ms.map(function(o){return '<div class="ex">'+esc(o.d[1])+'<em>→ '+esc(ans(o.d))+'</em></div>'}).join("")+'<button class="btn pri wide" id="rm">Повторить ошибки ('+S.ms.length+')</button>':'<div class="note blk">Без ошибок, отлично!</div>')+'<button class="btn wide" id="ag">Пройти ещё раз</button><button class="btn wide" id="hm">К темам</button>';
+var ms=S.ms,ids=S.ids,t=S.t,only=S.only;
+if(ms.length)document.getElementById("rm").onclick=function(){var s=S;run(ms,ids,t);S.only=1};
+document.getElementById("ag").onclick=function(){run(pick(ids,only),ids,t);S.only=only};
+document.getElementById("hm").onclick=function(){location.hash="home"}}
+function review(){var ids=Object.keys(BK),nw=Object.keys(WR).length;
+app.innerHTML='<button class="back">‹ Все темы</button><h2>Повторение</h2><p class="sub">Отметь темы, получишь до 10 перемешанных вопросов. Если не отметишь ни одной, возьмём все.</p>'+ids.map(function(b){var r=QS[b];return '<button class="item" data-b="'+b+'"><span class="dot '+(sel[b]?"on":"")+'">✓</span><span><b>'+esc(ttl(b))+'</b><small>'+(r?"лучший "+r.b+"% · раз: "+r.n:"ещё не проходил")+'</small></span></button>'}).join("")+'<button class="btn pri wide" id="go2">Повторить выбранные</button><button class="btn wide" id="er">Только мои ошибки ('+nw+')</button><div class="msg" id="rm2"></div>';
+app.querySelector(".back").onclick=function(){location.hash="home"};
+app.querySelectorAll("[data-b]").forEach(function(b){b.onclick=function(){var k=b.dataset.b;sel[k]=!sel[k];b.querySelector(".dot").classList.toggle("on",sel[k])}});
+document.getElementById("go2").onclick=function(){var s=ids.filter(function(k){return sel[k]});if(!s.length)s=ids;run(pick(s),s,"Повторение");location.hash="q-run"};
+document.getElementById("er").onclick=function(){if(!nw){document.getElementById("rm2").innerHTML='<span class="ok">Ошибок пока нет</span>';return}run(pick(ids,1),ids,"Мои ошибки");S.only=1;location.hash="q-run"}}
+function bt(id,t,s){var r=QS[id];return '<button class="item" data-q="'+id+'"><span><b>'+t+'</b><small>'+s+'</small></span>'+(r?'<span class="tag">'+r.l+'%</span>':"")+'</button>'}
+var _tp=topic;topic=function(id){_tp(id);var b=BK[id],d=document.getElementById("dn");if(!b||!d)return;
+var h='<h3>Повторение</h3>'+bt(id,"Тест для закрепления",b.length+" вопросов, каждый раз по-новому");
+if(id=="wordformation")h+=bt("wfp1","Практика: простой","3 предложения с подсказками")+bt("wfp2","Практика: средний","3 предложения с подсказками")+bt("wfp3","Практика: сложный","3 предложения с подсказками");
+d.insertAdjacentHTML("beforebegin",h);app.querySelectorAll("[data-q]").forEach(function(x){x.onclick=function(){location.hash="q-"+x.dataset.q}})};
+var _hm=home;home=function(){_hm();var s=document.getElementById("s"),nw=Object.keys(WR).length;if(!s)return;
+s.insertAdjacentHTML("afterend",'<button class="item" id="rv"><span><b>Повторение</b><small>Тесты по темам'+(nw?" · ошибок: "+nw:"")+'</small></span><span class="tag">Quiz</span></button>');
+document.getElementById("rv").onclick=function(){location.hash="review"}};
+function R2(){var h=location.hash.slice(1),my=h=="review"||h.indexOf("q-")==0;app.classList.add("go");setTimeout(function(){app.classList.remove("go")},700);
+if(h=="review")review();else if(my){var id=h.slice(2);if(id=="run"&&S)draw();else if(BK[id])run(pick([id]),[id],ttl(id));else home()}else route();
+if(my){document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.v=="home")});window.scrollTo(0,0)}}
+window.addEventListener("hashchange",R2);R2();
+})();
 </script>
 </body>
 </html>
